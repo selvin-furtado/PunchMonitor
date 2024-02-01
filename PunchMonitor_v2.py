@@ -60,8 +60,8 @@ def process_punch_log_file(filename, df_exemptedFaculty):
             if employee_code_value in df_exemptedFaculty[day_str].values:
                 logout_value = df_selected.loc[df_selected.index[df_selected["Employee Code"]==employee_code_value].item()].iloc[3]
                 if not isinstance(logout_value, float):
-                    if time(8,30,00) > logout_value:
-                        logout_value = time(8,30,00)
+                    if time(8,00,00) > logout_value:
+                        logout_value = time(8,00,00)
             else:
                 logout_value = df_selected.loc[df_selected.index[df_selected["Employee Code"]==employee_code_value].item()].iloc[3]
                 if not isinstance(logout_value, float):
