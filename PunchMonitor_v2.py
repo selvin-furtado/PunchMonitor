@@ -65,16 +65,16 @@ def process_punch_log_file(filename, df_exemptedFaculty):
             else:
                 logout_value = df_selected.loc[df_selected.index[df_selected["Employee Code"]==employee_code_value].item()].iloc[3]
                 if not isinstance(logout_value, float):
-                    if time(9,00,00) > logout_value:
-                        logout_value = time(9,00,00)
+                    if time(8,00,00) > logout_value:
+                        logout_value = time(8,00,00)
             df_selected.at[index, 'InTime'] = logout_value
             
     else:
         print(f"The column {day_str} does not exist in the DataFrame.")
                 
     df_selected['OutTime'] = df_selected['Last Punch'].apply(
-        lambda x: datetime.strptime('18:00:00', '%H:%M:%S').time() 
-            if (not pd.isnull(x)) and x > datetime.strptime('18:00:00', '%H:%M:%S').time() 
+        lambda x: datetime.strptime('16:30:00', '%H:%M:%S').time() 
+            if (not pd.isnull(x)) and x > datetime.strptime('16:30:00', '%H:%M:%S').time() 
                 else x)
 
     df_selected['InTime'] = pd.to_datetime(df_selected['InTime'], format='%H:%M:%S', errors='coerce')
@@ -84,7 +84,7 @@ def process_punch_log_file(filename, df_exemptedFaculty):
         if pd.isnull(row['InTime']):
             return None
         time_diff = row['OutTime'] - row['InTime']
-        if (row['InTime'].time() > time(10,00,00)) and (row['InTime'].time() < time(12,00,00)):
+        if (row['InTime'].time() > time(8,30,00)) and (row['InTime'].time() < time(10,00,00)):
             return "after 10"
         else:
             return str(time_diff)
